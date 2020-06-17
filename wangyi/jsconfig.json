@@ -1,0 +1,10 @@
+// 让vscode提示@开头的模块路径引入
+{
+    "compilerOptions": {
+      "baseUrl": "./",
+      "paths": {
+          "@/*": ["src/*"]
+       }
+      },
+    "exclude": ["node_modules", "dist"]
+  }
