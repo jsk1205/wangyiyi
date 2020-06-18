@@ -4,7 +4,7 @@
     <div class="header">
       <img class="logo" src="./logo.png" alt="">
       <div class="searchInput">
-        <i class="iconfont icon-search"></i>
+        <i class="iconfont icon-sousuo"></i>
         <span class="placeholder">搜索商品</span>
       </div>
       <div class="btn">登录</div>
@@ -84,10 +84,15 @@ export default {
 
 <style lang="stylus" scoped>
 #indexContainer
+  // box-sizing border-box
+  overflow hidden
   .header
     display flex
     align-items center
     padding 10px 0
+    height 100px
+    box-sizing border-box
+    overflow hidden
     .logo
       width 140px
       height 40px
@@ -104,7 +109,7 @@ export default {
         margin-left 60px
         color #333
       .iconfont
-        font-size 28px
+        font-size 40px
         position absolute
         left 20px
         top 0
@@ -122,6 +127,7 @@ export default {
     width 750px
     height 60px
     margin-bottom 30px
+    overflow hidden
     .nav
       display flex
       flex-direction row
@@ -137,6 +143,11 @@ export default {
         &.active
           color #DD1A21
           border-bottom 2px solid #DD1A21
+  .swiper-wrap
+    overflow hidden
+    .list
+      height calc(100vh - 190px)
+      overflow hidden
 .text
   font-size 0
 </style>

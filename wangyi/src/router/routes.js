@@ -13,7 +13,7 @@ export default [
     component:Home
   },
   {
-    path:'/catrgory',
+    path:'/category',
     component:Category
   },
   {

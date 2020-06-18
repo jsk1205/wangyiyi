@@ -2,19 +2,19 @@
   <div class="recommendContainer">
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
       <van-swipe-item class="iamg">
-        <img src="./images/10.jpg" mode=""></img>
+        <img src="./images/10.jpg" mode="" class="imgs">
       </van-swipe-item>
       <van-swipe-item class="iamg">
-        <img src="./images/11.jpg" mode=""></img>
+        <img src="./images/11.jpg" mode="" class="imgs">
       </van-swipe-item>
-      <van-swipe-item>
-        <img src="./images/12.jpg" mode=""></img>
+      <van-swipe-item class="iamg">
+        <img src="./images/12.jpg" mode="" class="imgs">
       </van-swipe-item>
-      <van-swipe-item>
-        <img src="./images/4.jpg" mode=""></img>
+      <van-swipe-item class="iamg">
+        <img src="./images/4.jpg" mode="" class="imgs">
       </van-swipe-item>
-      <van-swipe-item>
-        <img src="./images/53.jpg" mode=""></img>
+      <van-swipe-item class="iamg">
+        <img src="./images/53.jpg" mode="" class="imgs">
       </van-swipe-item>
     </van-swipe>
     <!-- 横向图标 -->
@@ -27,7 +27,7 @@
     <!-- 10个图标 -->
     <div class="kingList" v-if=" indexData.kingKongModule">
       <div class="kingItem" v-for="(item,index) in indexData.kingKongModule.kingKongList" :key="index">
-         <img :src="item.picUrl" class="mg"></img>
+         <img :src="item.picUrl" class="mg">
          <span class="txt">{{item.text}}</span>
       </div>
     </div>
@@ -78,7 +78,7 @@ import Gorys from "@/components/Gorys";
    .my-swipe 
      width 100%
      height 300px
-    .my-swipe .iamg
+     & .iamg
       color #fff
       width 100%
       height 300px
@@ -86,9 +86,9 @@ import Gorys from "@/components/Gorys";
       line-height 150px
       text-align center
       background-color salmon
-      // image 
-      //   width 100%
-      //   height 300px
+      .imgs 
+        width 100%
+        height 400px
     .policyList 
       display flex
       margin-top 10px

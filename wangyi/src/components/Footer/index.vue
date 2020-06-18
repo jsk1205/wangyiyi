@@ -1,23 +1,23 @@
 <template>
   <div class="bottom">
     <div class="item" @click="clickItem('/')" :class="{active:$route.path==='/'}">
-      <i class="iconfont icon-home"></i>
+      <i class="iconfont icon-shouye"></i>
       <span class="txt">首页</span>
     </div>
-    <div class="item" @click="clickItem('/catrgory')" :class="{active:$route.path==='/catrgory'}">
-      <i class="iconfont icon-fenlei"></i>
+    <div class="item" @click="clickItem('/category')" :class="{active:$route.path==='/category'}">
+      <i class="iconfont icon-fenlei_"></i>
       <span>分类</span>
     </div>
     <div class="item" @click="clickItem('/buy')" :class="{active:$route.path==='/buy'}">
-      <i class="iconfont icon-buy-icon"></i>
+      <i class="iconfont icon-mairu"></i>
       <span>值得买</span>
     </div>
     <div class="item" @click="clickItem('/cart')" :class="{active:$route.path==='/cart'}">
-      <i class="iconfont icon-gouwuchekong"></i>
+      <i class="iconfont icon-gouwuche"></i>
       <span>购物车</span>
     </div>
     <div class="item" @click="clickItem('/personal')" :class="{active:$route.path==='/personal'}">
-      <i class="iconfont icon-gerenzhongxin"></i>
+      <i class="iconfont icon-gerenzhongxin2"></i>
       <span>个人中心</span>
     </div>
   </div>

@@ -1,4 +1,5 @@
 //接口请求函数
-//import ajax from "./ajax";
+import ajax from "./ajax";
 
-//export const reqHomeDate=()=>ajax.get('/')
+export const reqIndexCateDate=()=>ajax.get('/getIndexCateList')
+export const reqCateNavData=()=>ajax.get('/getCateGoryData')

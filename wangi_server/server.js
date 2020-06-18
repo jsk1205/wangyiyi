@@ -34,6 +34,20 @@ router.get('/getIndexData',(ctx,next)=>{
   // }
 })
 
+//返回首页导航分类数据
+let indexCateData=require('./datas/indexCateList.json')
+router.get('/getIndexCateList',async(ctx,next)=>{
+  // 生成的H5应用存在跨域问题，通过CORS设置跨域配置
+  ctx.set('Access-Control-Allow-Origin', '*')
+    await new Promise(resolve => setTimeout(() => resolve(),2000))
+    ctx.body=indexCateData
+})
+
+//分页数据
+let cateNavData=require('./datas/categoryDatas.json')
+router.get('/getCateGoryData',async(ctx,next)=>{
+  ctx.body=cateNavData
+})
 
 //2.监听端口
 app.listen('3002',(err)=>{

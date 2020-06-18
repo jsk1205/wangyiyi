@@ -6,7 +6,7 @@ import Nprogress from "nprogress";
 //1
 const ajax=axios.create({
   baseURL:'/api',
-  timeout:2000
+  timeout:10000
 })
 //2请求拦截器
 ajax.interceptors.request.use((config)=>{
