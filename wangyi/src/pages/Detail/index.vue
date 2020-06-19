@@ -30,7 +30,6 @@
       <div class="btn addShopCart" @click="addShopCart">加入购物车</div>
     </div>
 
-
   </div>
 </template>
 
