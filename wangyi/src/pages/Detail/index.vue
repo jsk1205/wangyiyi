@@ -28,7 +28,6 @@
       <i class="iconfont icon-kefu ic"></i>
       <span class="btn buyNow">立即购买</span>
       <div class="btn addShopCart" @click="addShopCart">加入购物车</div>
-    
     </div>
 
 
