@@ -2,6 +2,7 @@
   <div class="listContainer">
     <div class="listItem" @click="toDetail(item)"
       v-for='(item, index) in shopList' :key='index'>
+
       <img :src="item.listPicUrl" alt="" class="im">
       <p>{{item.name}}</p>
 			<p style='color: red;font-weight: bold;'>$ {{item.retailPrice}}</p>
@@ -17,9 +18,15 @@
     props:['shopList'], 
     methods:{
       toDetail(shopItem){
-          
-      }
-    }
+				//console.log(shopItem) //{}
+				//let data=JSON.stringify(shopItem)
+				//console.log(data) //字符串
+          this.$router.push({
+					  path:'/detail',
+						query: {res: shopItem}
+						})
+			},
+		}
   }
 </script>
 

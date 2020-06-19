@@ -5,10 +5,11 @@
        <div class="person">个人中心</div>
 
        <div class="userInfo" @click='toLogin'>
-         <div class="user">
+         <!-- <router-link :to="/personal/login"></router-link> -->
+         <div class="user" >
            <img src="../../../static/images/personal/personal.png" class="iconfont" alt="">
            <div class="userRight">
-             <span>慕尔</span>
+             <span class="tit">慕尔</span>
              <span>微信用户</span>
            </div>
          </div>
@@ -85,7 +86,7 @@
     },
     methods:{
       toLogin(){
-
+        this.$router.push('/login')
       }
     }
   }
@@ -101,6 +102,8 @@
       font-size 28px
       height 100px
       line-height 100px
+      font-weight bold
+      color #333
     .userInfo
       display flex
       .user 
@@ -119,6 +122,10 @@
           span 
             display inline-block
             margin-bottom 10px
+            &.tit
+              color salmon
+              font-weight bold
+              font-size 26px
 
 
   .content

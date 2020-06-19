@@ -74,7 +74,7 @@ a:link:hover{
     clear: both;
     visibility: hidden;
 }
-button{
+button,input{
     outline: none;
     border: none;
 }

@@ -3,7 +3,8 @@
     <!-- 搜索区域 -->
     <div class="searchHeader">
       <i class="iconfont icon-tubiao-"></i>
-      <span class="placeholder">搜索商品,共33328款好物</span>
+      <input type="text" class="placeholder" placeholder="搜索商品,共33328款好物">
+      <!-- <span class="placeholder">搜索商品,共33328款好物</span> -->
     </div>
     <!-- 内容区域 -->
     <div class="contentContainer">
@@ -103,16 +104,20 @@ Vue.use(SidebarItem);
       .iconfont
         font-size 40px
         position absolute
-        left 200px
+        display inline-block
+        height 50px
+        width 50px
+        left 150px
         top 5px
       .placeholder
-         width 90%
+         width 300px
          height 60px 
          line-height 60px
          margin 0 auto
-         margin-left 100px
+         margin-left 220px
          text-align center
          font-size 26px
+         background #eee
     .contentContainer
         height calc(100vh - 90px)
         display flex

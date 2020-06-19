@@ -1,5 +1,5 @@
 <template>
-  <div class="cateList">
+  <div class="cateList" v-if="cateObj.category">
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" v-if="cateObj.category">
       <van-swipe-item v-for="(swiperItem, index) in cateObj.category.bannerUrlList" :key='index'>
         <img :src="swiperItem" mode="" class="im"></img>

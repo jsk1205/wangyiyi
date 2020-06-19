@@ -5,9 +5,10 @@
       <img class="logo" src="./logo.png" alt="">
       <div class="searchInput">
         <i class="iconfont icon-sousuo"></i>
-        <span class="placeholder">搜索商品</span>
+        <input type="text" class="placeholder" placeholder="搜索商品">
+        <!-- <span class="placeholder">搜索商品</span> -->
       </div>
-      <div class="btn">登录</div>
+      <div class="btn" @click="toLogin">登录</div>
     </div>
     <!-- 导航 -->
     <div class="navContent" ref="navContent">
@@ -32,8 +33,8 @@
     <!-- 内容区 -->
     <div class="swiper-wrap" ref="swiper">
       <div class="list" ref="list">
-        <Recommend v-if='navId===0'></Recommend>
-        <CateList v-if='navId !== 0' :navId='navId'> </CateList>
+        <Recommend v-if='navIndex===0'></Recommend>
+        <CateList v-if='navIndex !== 0' :navId='navId'> </CateList>
       </div>
     </div>
   </div>
@@ -52,8 +53,8 @@ export default {
   },
   data() {
     return {
-        navId: 0, // 导航动态class标识
-        navIndex: 0,// 导航对应页面标识
+        navIndex:0,//控制下边框的显示条
+				navId: 0,// 导航id
         comName: 'Recommend',
     }
   },
@@ -67,6 +68,9 @@ export default {
     }),
     changeIndex(navIndex,navId){
       (navId !== this.navId) && (this.navId = navId, this.navIndex = navIndex)
+    },
+    toLogin(){
+      this.$router.push('/login')
     }
   },
   computed: {
@@ -75,7 +79,7 @@ export default {
     })
   },
   watch:{
-      navId(Value){
+      navIndex(Value){
           this.comName = (Value === 0?'Recommend': 'CateList')
       }
     }
@@ -107,6 +111,7 @@ export default {
       .placeholder
         font-size 28px
         margin-left 60px
+        background #eee
         color #333
       .iconfont
         font-size 40px

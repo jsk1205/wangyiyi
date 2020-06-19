@@ -6,6 +6,7 @@ import Cart from "@/pages/Cart";
 import Personal from '@/pages/Personal';
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
+import Detail from "@/pages/Detail";
 export default [
   //创建路由器
   {
@@ -29,11 +30,21 @@ export default [
     component:Personal
   },
   {
-    path:'login',
-    component:Login
+    path:'/login',
+    component:Login,
+    meta: {
+      isHideFooter: true //标识footer是否隐藏
+    }
   },
   {
-    path:'register',
-    component:Register
+    path:'/register',
+    component:Register,
+    meta: {
+      isHideFooter: true //标识footer是否隐藏
+    }
+  },
+  {
+    path:'/detail',
+    component:Detail
   }
 ]

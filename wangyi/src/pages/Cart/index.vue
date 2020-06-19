@@ -19,30 +19,34 @@
       <template v-if="true">
         <!-- 登录后购物车 -->
         <div class="cartList">
-          <div class="cartItem">
-            <span class="iconfont icon-xuanzhong" ></span>
+          <div class="cartItem" v-for="(shopItem, index) in cartList" :key='shopItem.id'>
+            <span class="iconfont icon-xuanzhong" :class="{selected:shopItem.selected}" 
+              @click="changeSelected(!shopItem.selected,index)"
+            ></span>
             <div class="shopItem">
-              <img src="" alt="" class="shopImg">
+              <img :src="shopItem.listPicUrl" alt="" class="shopImg">
               <div class="shopInfo">
-                <span class="title">文字</span>
-                <span class="price">$</span>
+                <span class="title">{{shopItem.name}}</span>
+                <span class="price">￥{{shopItem.retailPrice}}</span>
               </div>
             </div>
             <!-- 数量 -->
             <div class="countCtronal">
-              <span class="add" >+</span>
-              <span class="count">数量</span>
-              <span class="del" >-</span>
+              <span class="add" @click="change(true, index)">+</span>
+              <span class="count">{{shopItem.count}}</span>
+              <span class="del" @click="change(false, index)">-</span>
             </div>
           </div>
         </div>
         <!-- 底部下单 -->
         <div class="cartFooter">
-          <span class="iconfont icon-xuanzhong" ></span>
-          <span class="allSelected">已选</span>
+          <span class="iconfont icon-xuanzhong" 
+          :class="{selected:isAllSelected}"
+          @click="changeAllSelected(!isAllSelected)"></span>
+          <span class="allSelected">已选{{totalCount}}</span>
           <div class="right">
-            <span class="totalPrice">合计:$1214</span>
-            <span class="preOrder">下单</span>
+            <span class="totalPrice">合计:￥{{totalPrice}}</span>
+            <span class="preOrder" @click="toPay">下单</span>
           </div>
         </div>
       </template>
@@ -59,6 +63,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+import {mapState,mapMutations,mapGetters} from 'vuex'
   export default {
     name:'Cart',
     data(){
@@ -70,6 +75,31 @@
       toLogin(){
 
       }
+    },
+    methods:{
+      ...mapMutations({
+         changeCountMutation:'changeCountMutation',
+         changeSelectedMutation:'changeSelectedMutation',
+         changeAllSelectedMutation:'changeAllSelectedMutation'
+      }),
+      change(isAdd,index){
+         this.changeCountMutation({isAdd, index})
+      },
+      changeSelected(selected,index){
+         this.changeSelectedMutation({selected,index})
+      },
+      changeAllSelected(selected){
+         this.changeAllSelectedMutation(selected)
+      },
+      toPay(){
+
+      }
+    },
+    computed:{
+      ...mapState({
+        cartList:state=>state.cart.cartList
+      }),
+      ...mapGetters(['isAllSelected','totalCount','totalPrice'])
     }
   }
 </script>
@@ -81,7 +111,6 @@
   .title 
     font-size 30px
     line-height 80px
-    margin-left 30px
     margin-bottom 1px solid #eee
   .header
     display flex
@@ -127,19 +156,19 @@
       margin-top 20px
       padding 20px 
       .iconfont 
-        font-size 40px
-        line-height 170px
-        margin 0 40px
+        font-size 30px
+        line-height 150px
+        margin 0 30px
         color #999
-       /*  &.selected
-						color: #BB2C08 */
+        &.selected
+          color red
       .shopItem
         display flex
         .shopImg
           width 170px
           height 170px
           box-sizing border-box
-          border 1px solid #333
+         
         .shopInfo
           font-size 28px
           display flex
@@ -148,7 +177,7 @@
           .title 
             line-height 60px
           .price
-            color: #BB2C08
+            color #BB2C08
       .countCtronal
         position absolute
         right 20px
@@ -159,11 +188,13 @@
           height 50px
           text-align center
           line-height 50px
-          border 1px solid #333
+          box-sizing border-box
+          border 1px solid #eee
           &:nth-child(2)
             border none
-            border-top 1px solid #333
-            border-bottom 1px solid #333
+            box-sizing border-box
+            border-top 1px solid #eee
+            border-bottom 1px solid #eee
 
   .cartFooter
     position absolute
@@ -177,9 +208,9 @@
     .iconfont
       font-size 4px
       margin 0 20px
-      color: #999
-      /* &.selected
-        color: #BB2C08 */
+      color #999
+      &.selected
+        color red
     .right 
       height 90px
       position absolute
