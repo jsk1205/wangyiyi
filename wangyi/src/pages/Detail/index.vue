@@ -23,7 +23,6 @@
           <li>4) AB双面设计，多种活性印花不易褪色</li>
       </ul>
     </div>
-  
     <!-- 底部导航 -->
     <div class="detailFooter">
       <i class="iconfont icon-kefu ic"></i>
