@@ -138,7 +138,6 @@ import ajax from '@/api/ajax'
         //   console.log(err)
         // })
       }
-
     } 
   }
 </script>
