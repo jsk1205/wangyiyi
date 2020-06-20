@@ -2,8 +2,10 @@
   "name": "wangyi_server",
   "version": "1.0.0",
   "dependencies": {
+    "cors": "^2.8.5",
     "koa": "^2.11.0",
     "koa-router": "^8.0.8",
+    "mongoose": "^5.9.19",
     "nodemon": "^2.0.2"
   },
   "scripts": {

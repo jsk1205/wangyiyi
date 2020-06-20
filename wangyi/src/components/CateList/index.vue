@@ -1,17 +1,12 @@
 <template>
-  <div class="cateList" v-if="cateObj.category">
+  <div class="cateList" v-if="cateObj">
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" v-if="cateObj.category">
       <van-swipe-item v-for="(swiperItem, index) in cateObj.category.bannerUrlList" :key='index'>
         <img :src="swiperItem" mode="" class="im"></img>
-      </van-swipe-item>
-      
+      </van-swipe-item> 
     </van-swipe>
-    
-    
     <span class="title">{{cateObj.category.name}}</span>
     <span class="tit">{{cateObj.category.frontDesc}}</span>
-
-    
     <ShopList :shopList='cateObj.itemList'></ShopList>
   </div>
 </template>
@@ -42,7 +37,7 @@ Vue.use(SwipeItem);
     },
     methods:{
       async getIndexCateDate(){
-        this.cateList=await reqIndexCateDate('/getIndexCateList')
+        this.cateList=await reqIndexCateDate()
       }
     },
     computed:{

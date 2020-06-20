@@ -25,6 +25,25 @@ module.exports = {
           "^/api": ''
         }
       },
+      '/host':{
+        target:'https://m.you.163.com',
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          "^/host": ''
+        }
+      }
+
+    }
+    
+  },
+  css: {
+    loaderOptions: {
+      postcss: {
+        plugins: [
+          postcss
+        ]
+      }
     }
   },
 

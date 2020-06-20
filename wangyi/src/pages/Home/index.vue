@@ -3,7 +3,7 @@
     <!-- 头部 -->
     <div class="header">
       <img class="logo" src="./logo.png" alt="">
-      <div class="searchInput">
+      <div class="searchInput" @click="toSearch">
         <i class="iconfont icon-sousuo"></i>
         <input type="text" class="placeholder" placeholder="搜索商品">
         <!-- <span class="placeholder">搜索商品</span> -->
@@ -12,27 +12,30 @@
     </div>
     <!-- 导航 -->
     <div class="navContent" ref="navContent">
-      <div class="nav" ref="nav" v-if="indexData.kingKongModule">
+      <div class="nav" id="nav">
         <div class="navItem" 
           :class="{active:navIndex===0}"
           @click="changeIndex(0,0)"
+          
           >
           <span>推荐</span>
         </div>
-        <div
+       <div  v-if="indexData.kingKongModule" style="display:flex"> 
+          <div
           class='navItem '
           v-for="(navItem,index) in indexData.kingKongModule.kingKongList" 
-			:key="index"
+			    :key="index"
           :class="{active:navIndex===(index+1)}"
           @click="changeIndex((index+1),navItem.L1Id)"
          >
           <span>{{navItem.text}}</span>
         </div>
+       </div>
       </div>
     </div>
     <!-- 内容区 -->
     <div class="swiper-wrap" ref="swiper">
-      <div class="list" ref="list">
+      <div class="list">
         <Recommend v-if='navIndex===0'></Recommend>
         <CateList v-if='navIndex !== 0' :navId='navId'> </CateList>
       </div>
@@ -44,6 +47,8 @@
 import {mapState,mapActions} from 'vuex';
 import Recommend from "@/components/Recommend";
 import CateList from "@/components/CateList";
+
+import BScroll from 'better-scroll'
 
 export default {
   name: 'Home',
@@ -60,19 +65,37 @@ export default {
   },
   mounted() {
    this.getIndexData() 
-  
+ 
+     let wrapper = this.$refs.navContent
+      console.log(wrapper)
+      scroll = new BScroll(wrapper, {
+        　scrollX: true,
+          click: true
+    })
+   
+   
+    let swiper=this.$refs.swiper
+    scrollY=new BScroll(swiper,{
+      　scrollY:true,
+        click:true
+    })
   },
   methods: {
     ...mapActions({
       getIndexData:'getIndexData'
     }),
     changeIndex(navIndex,navId){
-      (navId !== this.navId) && (this.navId = navId, this.navIndex = navIndex)
+      this.navIndex=navIndex
+      this.navId=navId
     },
     toLogin(){
       this.$router.push('/login')
+    },
+    toSearch(){
+      this.$router.push('/search')
     }
   },
+  
   computed: {
     ...mapState({
       indexData:state=>state.index.indexData,
@@ -88,15 +111,13 @@ export default {
 
 <style lang="stylus" scoped>
 #indexContainer
-  // box-sizing border-box
-  overflow hidden
+  width 750px
   .header
     display flex
     align-items center
     padding 10px 0
     height 100px
     box-sizing border-box
-    overflow hidden
     .logo
       width 140px
       height 40px
@@ -134,11 +155,9 @@ export default {
     margin-bottom 30px
     overflow hidden
     .nav
-      display flex
+      display inline-flex
       flex-direction row
       padding-left 30px
-      width 750px
-      overflow hidden
       box-sizing border-box
       .navItem
         padding  20px
@@ -150,9 +169,10 @@ export default {
           border-bottom 2px solid #DD1A21
   .swiper-wrap
     overflow hidden
+    height calc(100vh - 190px)
     .list
-      height calc(100vh - 190px)
-      overflow hidden
+      //display inline-block
+      // 
 .text
   font-size 0
 </style>

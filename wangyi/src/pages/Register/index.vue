@@ -15,32 +15,15 @@
           <span class="txt">网易严选</span>
         </div>
       </div>
-
-  <van-form @submit="onSubmit" class="lis">
-      <van-field
-        v-model="username"
-        name="用户名"
-        label="用户名"
-        placeholder="用户名"
-        :rules="[{ required: true, message: '请填写用户名' }]"
-        class="li"
-      />
-      <van-field
-        v-model="password"
-        type="password"
-        name="密码"
-        label="密码"
-        placeholder="密码"
-        :rules="[{ required: true, message: '请填写密码' }]"
-        class="li"
-      />
-      <div style="margin: 16px;">
-        <van-button round block type="info" native-type="submit"
-        class="btn">
-          提交
-        </van-button>
-      </div>
-  </van-form>
+      <form action="###" class="formLogin">
+        用户名： <input v-model="username"  type="text" placeholder="请输入用户名"> <br>
+        <br>
+        密  码： <input v-model="password" type="text" placeholder="请输入密码"> <br>
+        <br>
+        确认密码： <input v-model="rePassword" type="text" placeholder="请再次确认密码"> <br>
+        <br>
+        <button type="submit" @click.prevent="toRegister">注册</button>
+      </form>
 
    </div>
 
@@ -50,31 +33,61 @@
 </template>
 
 <script type="text/ecmascript-6">
-import Vue from 'vue';
-import { Form } from 'vant';
-import { Field } from 'vant';
-import {Button} from 'vant'
-Vue.use(Form);
-Vue.use(Field);
-Vue.use(Button);
+// import Vue from 'vue';
+// import { Form } from 'vant';
+// import { Field } from 'vant';
+// import {Button} from 'vant'
+// Vue.use(Form);
+// Vue.use(Field);
+// Vue.use(Button);
+import ajax from '@/api/ajax'
   export default {
     name:'Register', 
     data() {
       return {
         username: '',
         password: '',
-      };
+        rePassword:''
+      }
     }, 
     methods:{
-      toHome(){
-        this.$router.push('/')
-      },
-      toCart(){
-        this.$router.push('/cart')
-      },
-       onSubmit(values) {
-        console.log('submit', values);
+        toHome(){
+          this.$router.push('/')
+        },
+        toCart(){
+          this.$router.push('/cart')
+        },
+        async toRegister(){
+          let {username,password,rePassword}=this
+          //验证规则
+          let usernameReg =/^[a-zA-z0-9]{4,12}$/
+          let passwordReg = /^[0-9]{4,6}$/
+          //前端验证
+          if (!usernameReg.test(username.trim())) {
+            alert('用户名不正确，用户名必须是4-12位的字母或者数字')
+            return
+          }
+          if(!passwordReg.test(password.trim())){
+            alert('密码不正确，密码必须是4-6位的数字')
+            return
+          }
+          if(password!==rePassword){
+            alert('两次输入密码不一致，请再次确认');
+            return
+          }
+          //后端验证
+          let result=await ajax.get('/api/register',{params:{username,password}})
+          console.log(result)
+          // .then((res)=>{
+          //   console.log(res)
+          // }).catch(err=>{
+          //   console.log('注册失败')
+          //   console.log(err)
+          // })
       }
+      
+
+
     }
 
   }
@@ -119,12 +132,15 @@ Vue.use(Button);
           display inline-block
           font-size 50px
           margin-left 20px
-  .lis
-    width 600px
-    margin-left 80px
-    .li 
-      height 100px
-      font-size 26px
-      .btn
-        font-size 24px
+  // .form
+  //   width 600px
+  //   margin-left 80px
+  //   .username 
+  //     height 100px
+  //     font-size 26px
+  //   .password
+  //     height 100px
+  //     font-size 26px
+  //     .btn
+  //       font-size 24px
 </style>

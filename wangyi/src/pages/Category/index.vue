@@ -9,10 +9,10 @@
     <!-- 内容区域 -->
     <div class="contentContainer">
       <!-- 左侧 -->
-      <div class="leftContainer">
+      <div class="leftContainer" ref="leftNavContent">
 
         <!-- <van-sidebar v-model="activeKey" class="navList">
-          <van-sidebar-item title="item.name" class="navItem"
+          <van-sidebar-item :title="item.name" class="navItem"
           v-for="(item,index) in cateGoryList" :key="item.id"
            :class="{activeClass:activeKey === item.id}"
            @click="changeNavId(item.id)">
@@ -32,7 +32,7 @@
       </div>
 
       <!-- 右侧 -->
-      <div class="rightContainer">
+      <div class="rightContainer" ref="rightNav">
         
         <div class="rightScroll">
           <div class="contentList" v-if="cateListObj">
@@ -57,7 +57,7 @@
 import Vue from 'vue';
 import { Sidebar, SidebarItem } from 'vant';
 import { reqCateNavData } from "@/api";
-
+import bScroll from 'better-scroll'
 Vue.use(Sidebar);
 Vue.use(SidebarItem);
   export default {
@@ -82,6 +82,14 @@ Vue.use(SidebarItem);
     },
     mounted(){
       this.getCateGoryDatas()
+      let scorllNav=new bScroll(this.$refs.leftNavContent,{
+          scrollY:true,
+          click:true
+      })
+      let rightNav=new bScroll(this.$refs.rightNav,{
+          scrollY:true,
+          click:true
+      })
     },
     computed:{
       cateListObj(){
@@ -93,7 +101,6 @@ Vue.use(SidebarItem);
 
 <style lang="stylus" >
   .cateGoryContainer
-    overflow hidden
     .searchHeader
       position relative
       display flex
@@ -110,59 +117,61 @@ Vue.use(SidebarItem);
         left 150px
         top 5px
       .placeholder
-         width 300px
-         height 60px 
-         line-height 60px
-         margin 0 auto
-         margin-left 220px
-         text-align center
-         font-size 26px
-         background #eee
+        width 300px
+        height 60px 
+        line-height 60px
+        margin 0 auto
+        margin-left 220px
+        text-align center
+        font-size 26px
+        background #eee
     .contentContainer
-        height calc(100vh - 90px)
-        display flex
-        border-top 1upx solid #eee
-        .leftContainer
-          width 20%
-          border-right 1px solid #eee
-          box-sizing border-box
-          .navList
-            height calc(100vh - 90px)
-            .navItem
-              position relative
-              font-size 28px
-              height 80px
-              line-height 80px
-              text-align center
-              &.activeClass:after
-                position: absolute
-                top 10px
-                left 5px
-                content ''
-                height 60px
-                width 2px
-                background salmon
-			.rightContainer
-				width 80%
-				.rightScroll
-					height calc(100vh - 90px)
-					.contentList
-						display flex
-						flex-wrap wrap
-						.contentImg
-							width 520px
-							height 190px
-							margin 20px auto
-						.listItem
-							width 33.33%
-							display flex
-							flex-direction column
-							align-items center
-							.cateImg
-								width 90%
-								height 120px
-							span
-								font-size 22px
-								text-align center
+      height calc(100vh - 90px)
+      display flex
+      border-top 1upx solid #eee
+      .leftContainer
+        width 20%
+        border-right 1px solid #eee
+        box-sizing border-box
+        height calc(100vh - 190px)
+        overflow hidden
+        .navList
+          height calc(100vh - 90px)
+          .navItem
+            position relative
+            font-size 28px
+            height 80px
+            line-height 80px
+            text-align center
+            &.activeClass:after
+              position: absolute
+              top 10px
+              left 5px
+              content ''
+              height 60px
+              width 2px
+              background salmon
+      .rightContainer
+        width 80%
+        overflow hidden
+        .rightScroll
+          .contentList
+            display flex
+            flex-wrap wrap
+            .contentImg
+              width 520px
+              height 190px
+              margin 20px auto
+            .listItem
+              width 33.33%
+              display flex
+              flex-direction column
+              align-items center
+              .cateImg
+                width 90%
+                height 120px
+              span
+                font-size 22px
+                text-align center
 
 </style>

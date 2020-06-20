@@ -7,6 +7,7 @@ import Personal from '@/pages/Personal';
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Detail from "@/pages/Detail";
+import Search from "@/pages/Search";
 export default [
   //创建路由器
   {
@@ -46,5 +47,12 @@ export default [
   {
     path:'/detail',
     component:Detail
+  },
+  {
+    path:'/search',
+    component:Search,
+    meta: {
+      isHideFooter: true //标识footer是否隐藏
+    }
   }
 ]

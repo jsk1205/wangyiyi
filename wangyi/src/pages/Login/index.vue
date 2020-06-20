@@ -16,14 +16,48 @@
         <span>网易严选</span>
       </div>
       <div class="ic">
-        <div class="login">
-        <i class="iconfont icon-shouji"></i>
-        <span class="tit" @click="toRegister">手机号快捷登录</span>
+        <!-- <div class="login">
+          <i class="iconfont icon-shouji"></i>
+          <span class="tit" @click="toRegister">手机号快捷登录</span>
         </div>
         <div class="login colors">
           <i class="iconfont icon-youxiang"></i>
           <span class="tit email">邮箱快捷登录</span>
+        </div> -->
+   <!--<van-form @submit="onSubmit" class="form">
+        <van-field
+          v-model="username"
+          name="用户名"
+          label="用户名"
+          placeholder="用户名"
+          :rules="[{ required: true, message: '请填写用户名' }]"
+          class="username"
+        />
+        <van-field
+          v-model="password"
+          type="password"
+          name="密码"
+          label="密码"
+          placeholder="密码"
+          :rules="[{ required: true, message: '请填写密码' }]"
+          class="password"
+        />
+        <div style="margin: 16px;">
+          <van-button round block type="info" native-type="submit"
+          class="btn">
+            提交
+          </van-button>
         </div>
+       </van-form> -->
+        <form action="###" class="formLogin" >
+          用户名： <input v-model="username"  type="text" placeholder="请输入用户名"> <br>
+          <br>
+          密  码： <input v-model="password" type="text" placeholder="请输入密码"> <br>
+          <br>
+          <!-- @click.prevent="tologin" -->
+          <button type="submit" class="btn" @click.prevent="toLogin">登录</button>
+          <button type="submit" class="btn" @click.prevent="toRegister">注册</button>
+        </form>
       </div>
     </div>
     <!-- 底部 -->
@@ -51,8 +85,15 @@
 </template>
 
 <script type="text/ecmascript-6">
+import ajax from '@/api/ajax'
   export default {
     name:'Login', 
+    data(){
+      return{
+        username: '',
+        password: ''
+      }
+    },
     methods:{
       toHome(){
         this.$router.push('/')
@@ -61,8 +102,43 @@
         this.$router.push('/cart')
       },
       toRegister(){
-        this.$router.push('/Register')
+        this.$router.push('./register')
+      },
+      // tologin(){
+      //   this.$router.push('/Register')
+      // },
+      //  onSubmit(values) {
+      //   console.log('submit', values);
+      // }
+      async toLogin(){
+        let {username,password}=this
+        //验证规则
+        let usernameReg =/^[a-zA-z0-9]{4,12}$/
+        let passwordReg = /^[0-9]{4,6}$/
+        //前端验证
+        if (!usernameReg.test(username.trim())) {
+           alert('用户名不正确，用户名必须是4-12位的字母或者数字')
+           return
+        }
+        if(!passwordReg.test(password.trim())){
+          alert('密码不正确，密码必须是4-6位的数字')
+          return
+        }
+        //后端验证
+       let result=await ajax.get('/api/login',{
+            params:{username,password}
+        })
+        console.log(result)
+        // .then((res)=>{
+        //   console.log(res)
+        //   const {redirect}=this.$route.query
+        //   this.$router.replace(redirect||'/personal')
+        // }).catch(err=>{
+        //   console.log('登录失败')
+        //   console.log(err)
+        // })
       }
+
     } 
   }
 </script>
