@@ -141,7 +141,6 @@ import ajax from '@/api/ajax'
     } 
   }
 </script>
-
 <style lang="stylus">
 .loginContainer
   position relative
