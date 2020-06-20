@@ -44,7 +44,6 @@ import { mapState,mapMutations } from 'vuex'
     },
     mounted(){
       this.shopDetail=this.$route.query.res
-      
       console.log( this.shopDetail) 
      
       
