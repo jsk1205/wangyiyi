@@ -16,8 +16,8 @@
     <div class="hot">
       <span class="tit">热门搜索</span>
       <div class="hotItem">
-        <div class="hotList">
-          <span class="txt">我是热门</span>
+        <div class="hotList" v-for="(item, index) in searchInput.hotKeywordVOList" :key="index">
+          <span class="txt" :class="{active:item.algSort}">{{item.keyword}}</span>
         </div>
       </div>
       <div class="hotItem">
@@ -43,7 +43,7 @@
 <script type="text/ecmascript-6">
 import Vue from 'vue';
 import { Search,Toast} from 'vant';
-import { reqSearchInput } from '@/api'
+import { reqSearchInput,reqSearch } from '@/api'
 Vue.use(Search);
 
   export default {
@@ -52,10 +52,12 @@ Vue.use(Search);
       return {
         value: '',
         searchInput:{},//初始化数据
+        searchData:{}//搜索数据
       };
     },
     mounted(){
-       
+       this.getSearch()
+       this.getSearchData()
     },
     methods: {
       onSearch(val) {
@@ -67,7 +69,14 @@ Vue.use(Search);
       },
       async getSearch(){
         let result=await reqSearchInput()
-        console.log(result)
+        // console.log(result)
+        if(result.code==='200'){
+          this.searchInput=result.data
+        }
+     },
+     async getSearchData(keyword){
+       let result=await reqSearch(keyword)
+       console.log(result)
      } 
     },
     
@@ -102,6 +111,7 @@ Vue.use(Search);
     display flex
     flex-direction column
     margin-top 10px
+    margin-left 35px
     .tit 
       display inline-block
       font-size 30px
@@ -109,19 +119,18 @@ Vue.use(Search);
       margin-bottom 20px
       margin-left 10px
     .hotItem 
-      display flex
-      flex-direction column
-      align-content center
-      width 90%
+      margin-left 10px
+      
       .hotList
         display inline-block
         margin-right 40px
         margin-bottom 40px
         .txt 
-          font-size 28px
+          font-size 24px
           padding 10px
           border-radius 5px
           color #333
+          border 1px solid grey
           &.active
             color #DD1A21
             border 1px solid #DD1A21

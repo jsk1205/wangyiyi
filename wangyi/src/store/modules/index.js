@@ -11,7 +11,7 @@ const mutations={
 const actions={
   async getIndexData({commit}){
     let result=await ajax.get('/api/getIndexData')
-    console.log(result)
+    //console.log(result)
     commit(CHANGEINDEXDATA,result)
   }
 }

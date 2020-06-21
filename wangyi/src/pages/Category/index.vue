@@ -72,7 +72,7 @@ Vue.use(SidebarItem);
     methods:{
       async getCateGoryDatas(){
         let result=await reqCateNavData('/getCateGoryData')
-        console.log(result)
+        //console.log(result)
         this.cateGoryList=result
         this.navId=this.cateGoryList[0].id
       },

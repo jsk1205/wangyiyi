@@ -11,22 +11,19 @@
     </div>
     <!-- 内容区域 -->
     <div class="content">
-      <div class="worthBuy" ref="worths">
+      <div class="worthBuy">
         <img class="worthyImg" src="https://m.you.163.com/topic/index/img/topic_title_bg.2373a140.png" alt="">
         <div class="worthyTitle">
           <img src="https://m.you.163.com/topic/index/img/topic_logo.c2284970.png" alt="">
           <div class="title">严选好物&nbsp;用心生活</div>
         </div>
         <!-- 滑屏区域 -->
-        <div class="worthSwiper" >
+        <div class="worthSwiper">
           <div class="worthyCenter">
-            <div class="worthItem" v-for="(item,index) in worthNav.navList" :key="index" >
-              <!-- <swiper-slide> -->
-                <img :src="item.picUrl" alt="">
-                <span class="title">{{item.mainTitle}}</span>
-                <span class="text">{{item.viceTitle}}</span>
-              <!-- </swiper-slide> -->
-              <!-- <div class="swiper-pagination" slot="pagination"></div> -->
+            <div class="worthItem" v-for="(item,index) in worthNav.navList" :key="index">
+              <img :src="item.picUrl" alt="">
+              <span class="title">{{item.mainTitle}}</span>
+              <span class="text">{{item.viceTitle}}</span>
             </div>
           </div>
         </div>
@@ -43,30 +40,13 @@
 
 <script type="text/ecmascript-6">
 import {reqWorthyNav} from '@/api'
-import BScroll from 'better-scroll'
-// import { swiper,swiperSlide} from 'vue-awesome-swiper'
-// import 'swiper/dist/css/swiper.css'
+
   export default {
     name:'Buy',
-    // name: 'swiper-example-slides-per-column',
-    // title: 'Multi row slides layout',
-    // components: {
-    //   Swiper,
-    //   SwiperSlide
-    // },
     data(){
       return {
         worthNav:{},
-        worthData:{},
-        // swiperOption: {
-        //   slidesPerView: 3,
-        //   slidesPerColumn: 2,
-        //   spaceBetween: 30,
-        //   pagination: {
-        //     el: '.swiper-pagination',
-        //     clickable: true
-        //   }
-        // }
+        worthData:{}
       }
     },
     methods:{
@@ -78,12 +58,7 @@ import BScroll from 'better-scroll'
     },
     mounted(){
       this.getWorthNav()
-    //   let wrapper = this.$refs.worths
-    //    scroll = new BScroll(wrapper, {
-    //     　scrollX: true,
-    //       click: true
-    // })
-     }
+    }
   }
 </script>
 
@@ -155,8 +130,6 @@ import BScroll from 'better-scroll'
           box-sizing border-box
           width 25%
           overflow hidden
-          margin-left: auto;
-          margin-right: auto;
           img 
             width 120px
             height 120px
