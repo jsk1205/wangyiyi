@@ -110,7 +110,8 @@ import ajax from '@/api/ajax'
       //  onSubmit(values) {
       //   console.log('submit', values);
       // }
-      async toLogin(){
+      async toLogin(values){
+        // console.log('submit', values);
         let {username,password}=this
         //验证规则
         let usernameReg =/^[a-zA-z0-9]{4,12}$/
@@ -128,7 +129,11 @@ import ajax from '@/api/ajax'
        let result=await ajax.get('/api/login',{
             params:{username,password}
         })
-        console.log(result)
+        //console.log('------',result)
+        if(result.code==='200'){
+          localStorage.setItem('userInfo',result.data)
+        }
+        this.$router.push('/personal')
         // .then((res)=>{
         //   console.log(res)
         //   const {redirect}=this.$route.query
@@ -213,7 +218,6 @@ import ajax from '@/api/ajax'
       .font
         width 250px
         height 100px
-        box-sizing border-box
         .iconfont
           font-size 36px 
         span 

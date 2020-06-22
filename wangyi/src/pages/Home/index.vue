@@ -8,7 +8,7 @@
         <input type="text" class="placeholder" placeholder="搜索商品">
         <!-- <span class="placeholder">搜索商品</span> -->
       </div>
-      <div class="btn" @click="toLogin">登录</div>
+      <div class="btn" @click="toLogin">{{userInfo.username? userInfo.username:'请登录'}}</div>
     </div>
     <!-- 导航 -->
     <div class="navContent" ref="navContent">
@@ -61,6 +61,7 @@ export default {
         navIndex:0,//控制下边框的显示条
 				navId: 0,// 导航id
         comName: 'Recommend',
+        userInfo:{}
     }
   },
   mounted() {
@@ -69,6 +70,7 @@ export default {
      let wrapper = this.$refs.navContent
       console.log(wrapper)
       scroll = new BScroll(wrapper, {
+          scrollY:false,
         　scrollX: true,
           click: true
     })
@@ -77,8 +79,14 @@ export default {
     let swiper=this.$refs.swiper
     scrollY=new BScroll(swiper,{
       　scrollY:true,
-        click:true
+        
+        click:true,
     })
+    let userInfo=localStorage.getItem('userInfo')
+      if (userInfo) {
+        this.userInfo=JSON.parse(userInfo)
+        // console.log(this.userInfo)
+      }
   },
   methods: {
     ...mapActions({

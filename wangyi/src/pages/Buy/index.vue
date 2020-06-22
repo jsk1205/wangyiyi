@@ -2,11 +2,11 @@
   <div class="worthContainer">
     <!-- 头部 -->
     <div class="header">
-     <i class="iconfont icon-shouye"></i>
+     <i class="iconfont icon-shouye" @click="toHome"></i>
      <span class="title">值得买</span>
      <div class="icon">
-       <i class="iconfont icon-sousuo"></i>
-       <i class="iconfont icon-gouwuche "></i>
+       <i class="iconfont icon-sousuo" @click="toSearch"></i>
+       <i class="iconfont icon-gouwuche " @click="toCart"></i>
      </div>
     </div>
     <!-- 内容区域 -->
@@ -18,7 +18,7 @@
           <div class="title">严选好物&nbsp;用心生活</div>
         </div>
         <!-- 滑屏区域 -->
-        <div class="worthSwiper">
+        <div class="worthSwiper" ref="worthSwiper">
           <div class="worthyCenter">
             <div class="worthItem" v-for="(item,index) in worthNav.navList" :key="index">
               <img :src="item.picUrl" alt="">
@@ -26,6 +26,10 @@
               <span class="text">{{item.viceTitle}}</span>
             </div>
           </div>
+
+          <!-- <div class="dot" >  
+            <span></span>
+          </div> -->
         </div>
 
       </div>
@@ -37,29 +41,26 @@
       </vueWaterfallEasy> -->
       <div class="wrappers">
         <div class="lookList">
-          <div class="lookColumn">
-            <div class="lookBlock" v-for="(item,index) in worthManual.topics" >
-              <img :src="item.avatar" alt="" class="Img">
-              <span>{{item.title}}</span>
-               <div class="detail">
-                 <div class="good">
-                   <img src="" alt="">
-                   <span>好物大赏</span>
-                 </div>
-                 <div class="some">
-                   <img src="" alt="">
-                   <span>47k</span>
-                 </div>
-               </div>
+          <div class="lookColumn" v-if=" worthManualData[0]">
+            <div class="lookBlock" v-for="(item,index) in worthManualData[0].topics" >
+                  <img :src="item.picUrl" alt="" class="Img">
+                  <span>{{item.title}}</span>
+                  <div class="detail">
+                    <div class="good">
+                      <img :src="item.avatar" alt="">
+                      <span>{{item.nickname}}</span>
+                    </div>
+                    <div class="some">
+                      <img :src="item.schemeUrl" alt="">
+                      <span>47k</span>
+                    </div>
+                  </div>
+            
             </div> 
           </div>
           <div class="lookColumn shadow">2</div>
         </div>
-      </div>
-     
-
-
-    
+      </div> 
 
   </div>
 </template>
@@ -67,12 +68,15 @@
 <script type="text/ecmascript-6">
 import {reqWorthyNav,reqWorthManual,reqWorthAuto} from '@/api'
 import vueWaterfallEasy from 'vue-waterfall-easy'
+import BScroll from 'better-scroll'
   export default {
     name:'Buy',
     data(){
       return {
         worthNav:{},
-        worthManual:[],//瀑布流
+        worthIndex:0,
+        col:2,
+        worthManualData:[],//瀑布流
         worthAuto:{},//触底加载
       }
     },
@@ -80,6 +84,9 @@ import vueWaterfallEasy from 'vue-waterfall-easy'
     vueWaterfallEasy
     }, 
     methods:{
+      toHome(){
+        this.$router.push('/')
+      },
       async getWorthNav(){
         let result=await reqWorthyNav()
         //console.log(result)
@@ -88,13 +95,35 @@ import vueWaterfallEasy from 'vue-waterfall-easy'
       async getWorthManual(){
         let result=await reqWorthManual()
         if(result.code==='200')
-        this.worthManual=result.data
-        console.log(this.worthManual)
+        this.worthManualData=result.data
+        console.log(this.worthManualData)
+      },
+      toSearch(){
+        this.$router.push('/search')
+      },
+      toCart(){
+        this.$router.push('/cart')
       }
     },
     mounted(){
       this.getWorthNav()
       this.getWorthManual()
+      let scrollWrap=new BScroll(this.$refs.worthSwiper,{
+        scrollX:true,
+        scrollY:false,
+        snap:{
+          speed:800,
+          easing:{
+            style:'ease-in'
+          },
+        threshold: 0.5,  // 超过一半时切换到下一屏
+        stepX: 169,  // 切换距离为轮播图宽度   
+        }
+      })
+      scrollWrap.on('scrollEnd',({x,y})=>{
+        let index=Math.abs(x/169)
+        this.worthIndex=Math.ceil(index)
+      })
     }
   }
 </script>
@@ -107,7 +136,6 @@ import vueWaterfallEasy from 'vue-waterfall-easy'
     background #eee
     display flex
     line-height 90px
-    box-sizing border-box
     .iconfont
       font-size 40px
       margin-left 10px
@@ -127,6 +155,7 @@ import vueWaterfallEasy from 'vue-waterfall-easy'
       top 0
       left 0
       z-index 1
+      overflow hidden
       .worthyImg
         width 100% 
         height auto
@@ -147,7 +176,7 @@ import vueWaterfallEasy from 'vue-waterfall-easy'
           margin-left 130px
     .worthSwiper
       width 90%
-      height 390px
+      height 400px
       background #eee
       border-radius 20px
       overflow hidden
@@ -158,15 +187,13 @@ import vueWaterfallEasy from 'vue-waterfall-easy'
       .worthyCenter 
         display flex
         flex-wrap wrap
-        overflow hidden
+        width 1400px
+        height 400px
         .worthItem 
           display flex
           align-items center
           flex-direction column
-          margin-top 10px
-          box-sizing border-box
-          width 25%
-          overflow hidden
+          width 169px
           img 
             width 120px
             height 120px
@@ -184,15 +211,15 @@ import vueWaterfallEasy from 'vue-waterfall-easy'
     background skyblue
     width 90%
     border-radius 20px
-    height 1000px
+    height 1500px
     margin 0 auto
-    box-sizing border-box
     .lookList
       background salmon
       display flex
       .lookColumn
-        height 400px
+        height 1500px
         width 50%
+        // display flex
         background orange
         border-radius 20px
         .lookBlock
@@ -202,20 +229,23 @@ import vueWaterfallEasy from 'vue-waterfall-easy'
           .Img
             display block
             width 100%
-            height 180px
+            height 200px
             border 1px solid red
           span 
             // font-size 28px
             display inline-block
             height 100px
+            padding-top 20px
+            box-sizing border-box
           .detail 
             display flex
             padding 0 20px
-            line-height 50px
-            margin-top 20px
             box-sizing border-box
+            // line-height 30px
+            // margin-top 10px
             .good
               display flex
+             
               img 
                 display inline-block
                 width 48px

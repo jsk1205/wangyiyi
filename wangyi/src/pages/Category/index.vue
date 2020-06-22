@@ -132,7 +132,7 @@ Vue.use(SidebarItem);
       .leftContainer
         width 20%
         border-right 1px solid #eee
-        box-sizing border-box
+    
         height calc(100vh - 190px)
         overflow hidden
         .navList

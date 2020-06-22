@@ -5,11 +5,11 @@
        <div class="person">个人中心</div>
 
        <div class="userInfo" @click='toLogin'>
-         <!-- <router-link :to="/personal/login"></router-link> -->
+        
          <div class="user" >
            <img src="../../../static/images/personal/personal.png" class="iconfont" alt="">
            <div class="userRight">
-             <span class="tit">慕尔</span>
+             <span class="tit">{{userInfo.username? userInfo.username:'请登录'}}</span>
              <span>微信用户</span>
            </div>
          </div>
@@ -81,13 +81,21 @@
     name:'Personal',
     data(){
       return{
-
+        userInfo:{}
       }
     },
     methods:{
       toLogin(){
         this.$router.push('/login')
       }
+    },
+    mounted(){
+      let userInfo=localStorage.getItem('userInfo')
+      if (userInfo) {
+        this.userInfo=JSON.parse(userInfo)
+        // console.log(this.userInfo)
+      }
+     
     }
   }
 </script>

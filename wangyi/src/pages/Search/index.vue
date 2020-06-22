@@ -13,27 +13,19 @@
       </form>
     </div>
     <!-- 热门搜索 -->
-    <div class="hot">
+    <div class="hot" v-if="!searchData.length>0">
       <span class="tit">热门搜索</span>
       <div class="hotItem">
         <div class="hotList" v-for="(item, index) in searchInput.hotKeywordVOList" :key="index">
           <span class="txt" :class="{active:item.algSort}">{{item.keyword}}</span>
         </div>
-      </div>
-      <div class="hotItem">
-        <div class="hotList">
-          <span class="txt">我是热门</span>
-        </div>
-      </div>
-      <div class="hotItem">
-        <div class="hotList">
-          <span class="txt">我是热门</span>
-        </div>
+      </div> 
+    </div>
+    <div class="hotItems" v-else>
+      <div class="hotLists" v-for="(item, index) in searchData" :key="index">
+        <van-cell :title="item"  />
       </div>
     </div>
-
-
-
 
 
 
@@ -42,8 +34,11 @@
 
 <script type="text/ecmascript-6">
 import Vue from 'vue';
-import { Search,Toast} from 'vant';
+import { Search,Form,Toast,Cell,CellGroup} from 'vant';
 import { reqSearchInput,reqSearch } from '@/api'
+import debounce from 'lodash/debounce'
+Vue.use(Cell);
+Vue.use(CellGroup);
 Vue.use(Search);
 
   export default {
@@ -52,16 +47,27 @@ Vue.use(Search);
       return {
         value: '',
         searchInput:{},//初始化数据
-        searchData:{}//搜索数据
+        searchData:[]//搜索数据
       };
     },
     mounted(){
        this.getSearch()
-       this.getSearchData()
     },
     methods: {
+      getDedounce:debounce(function (keyword) {
+        this.getSearchData(keyword)
+      },1000),
       onSearch(val) {
-        this.getSearch()
+        // let timer
+        // let show=true
+        // clearTimeout(timer)
+        // if(!show) return 
+        // timer=setTimeout(() => {
+        //   show=false
+        //   this.getSearchData(val)
+        // }, 1000);
+        this.getSearchData(val)
+      //  console.log(111)
         Toast(val);
       },
       onCancel() {
@@ -76,7 +82,9 @@ Vue.use(Search);
      },
      async getSearchData(keyword){
        let result=await reqSearch(keyword)
-       console.log(result)
+       if(result.code==='200'){
+          this.searchData=result.data
+        }
      } 
     },
     
@@ -120,7 +128,6 @@ Vue.use(Search);
       margin-left 10px
     .hotItem 
       margin-left 10px
-      
       .hotList
         display inline-block
         margin-right 40px
@@ -134,4 +141,21 @@ Vue.use(Search);
           &.active
             color #DD1A21
             border 1px solid #DD1A21
+
+  .hotItems
+    height 100px
+    background salmon
+    .hotLists
+      height 100px
+      .van-cell 
+        padding 0 40px
+        height 100px
+        line-height 100px
+        box-sizing border-box
+        .van-cell__title
+          font-size 30px
+          border-bottom 1px solid #999
+        .van-icon 
+          line-height 100px
+          font-size 30px
 </style>

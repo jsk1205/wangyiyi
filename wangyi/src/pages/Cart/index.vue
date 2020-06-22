@@ -2,7 +2,7 @@
   <div class="cartContainer">
     <div class="title">购物车</div>
 
-    <template v-if='false'>
+    <template v-if='!userInfo.username'>
       <!-- 未登录 -->
       <div class="header">
         <span>30天无忧退货</span>
@@ -16,7 +16,7 @@
     </template>
     <template v-else>
       <!-- 登录 -->
-      <template v-if="true">
+      <template v-if="cartList.length>0">
         <!-- 登录后购物车 -->
         <div class="cartList">
           <div class="cartItem" v-for="(shopItem, index) in cartList" :key='shopItem.id'>
@@ -68,14 +68,10 @@ import {mapState,mapMutations,mapGetters} from 'vuex'
     name:'Cart',
     data(){
       return{
-
+        userInfo:{}
       }
     },
-    methods:{
-      toLogin(){
-
-      }
-    },
+    
     methods:{
       ...mapMutations({
          changeCountMutation:'changeCountMutation',
@@ -91,6 +87,9 @@ import {mapState,mapMutations,mapGetters} from 'vuex'
       changeAllSelected(selected){
          this.changeAllSelectedMutation(selected)
       },
+      toLogin(){
+        this.$router.push('/login')
+      },
       toPay(){
 
       }
@@ -100,6 +99,14 @@ import {mapState,mapMutations,mapGetters} from 'vuex'
         cartList:state=>state.cart.cartList
       }),
       ...mapGetters(['isAllSelected','totalCount','totalPrice'])
+      
+    },
+    mounted(){
+      let userInfo=localStorage.getItem('userInfo')
+      if (userInfo) {
+        this.userInfo=JSON.parse(userInfo)
+        // console.log(this.userInfo)
+      }
     }
   }
 </script>
@@ -154,7 +161,7 @@ import {mapState,mapMutations,mapGetters} from 'vuex'
       height 170px
       background #eee
       margin-top 20px
-      padding 20px 
+      padding 20px
       .iconfont 
         font-size 30px
         line-height 150px
@@ -167,7 +174,6 @@ import {mapState,mapMutations,mapGetters} from 'vuex'
         .shopImg
           width 170px
           height 170px
-          box-sizing border-box
          
         .shopInfo
           font-size 28px
@@ -188,11 +194,10 @@ import {mapState,mapMutations,mapGetters} from 'vuex'
           height 50px
           text-align center
           line-height 50px
-          box-sizing border-box
+          
           border 1px solid #eee
           &:nth-child(2)
             border none
-            box-sizing border-box
             border-top 1px solid #eee
             border-bottom 1px solid #eee
 

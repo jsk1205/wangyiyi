@@ -132,6 +132,9 @@ import ajax from '@/api/ajax'
           display inline-block
           font-size 50px
           margin-left 20px
+    // .formLogin
+    //   width 600px
+    //   margin-left 80px
   // .form
   //   width 600px
   //   margin-left 80px
